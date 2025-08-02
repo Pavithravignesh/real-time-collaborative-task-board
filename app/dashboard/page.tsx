@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { usePlan } from "@/lib/contexts/PlanContext";
 import { useBoards } from "@/lib/hooks/useBoards";
 import { Board } from "@/lib/supabase/models";
 import { useUser } from "@clerk/nextjs";
@@ -26,7 +25,6 @@ import {
   Filter,
   Grid3x3,
   List,
-  Loader2,
   Plus,
   Rocket,
   Search,
@@ -38,9 +36,8 @@ import { useState } from "react";
 
 export default function DashboardPage() {
   const { user } = useUser();
-  const { createBoard, boards, loading, error } = useBoards();
+  const { createBoard, boards, error } = useBoards();
   const router = useRouter();
-  const { isFreeUser } = usePlan();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [showUpgradeDialog, setShowUpgradeDialog] = useState<boolean>(false);
@@ -56,8 +53,6 @@ export default function DashboardPage() {
       max: null as number | null,
     },
   });
-
-  const canCreateBoard = isFreeUser || boards.length < 1;
 
   const boardsWithTaskCount = boards.map((board: Board) => ({
     ...board,
@@ -93,20 +88,8 @@ export default function DashboardPage() {
   }
 
   const handleCreateBoard = async () => {
-    if (!canCreateBoard) {
-      setShowUpgradeDialog(true);
-      return;
-    }
     await createBoard({ title: "New Board" });
   };
-
-  // if (loading) {
-  //   return (
-  //     <div>
-  //       <Loader2 /> <span>Loading your boards...</span>
-  //     </div>
-  //   );
-  // }
 
   if (error) {
     return (
@@ -128,7 +111,7 @@ export default function DashboardPage() {
             {user?.firstName ?? user?.emailAddresses[0].emailAddress}! 👋
           </h1>
           <p className="text-gray-600">
-            Here's what's happening with your boards today.
+            Here what happening with your boards today.
           </p>
         </div>
 
@@ -219,11 +202,6 @@ export default function DashboardPage() {
                 Your Boards
               </h2>
               <p className="text-gray-600">Manage your projects and tasks</p>
-              {isFreeUser && (
-                <p className="text-sm text-gray-500 mt-1">
-                  Free plan: {boards.length}/1 boards used
-                </p>
-              )}
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
