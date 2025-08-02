@@ -69,7 +69,6 @@ function DroppableColumn({
           isOver ? "ring-2 ring-blue-300" : ""
         }`}
       >
-        {/* Column Header */}
         <div className="p-3 sm:p-4 border-b">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 min-w-0">
@@ -91,7 +90,6 @@ function DroppableColumn({
           </div>
         </div>
 
-        {/* column content */}
         <div className="p-2">
           {children}
           <Dialog>
@@ -124,7 +122,7 @@ function DroppableColumn({
                   <Textarea
                     id="description"
                     name="description"
-                    placeholder="Enter task description"
+                    placeholder="Enter task description..."
                     rows={3}
                   />
                 </div>
@@ -159,7 +157,7 @@ function DroppableColumn({
                 </div>
 
                 <div className="flex justify-end space-x-2 pt-4">
-                  <Button type="submit">Create Task</Button>
+                  <Button type="submit">Create task</Button>
                 </div>
               </form>
             </DialogContent>

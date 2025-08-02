@@ -2,37 +2,6 @@
 
 # Build a Trello Clone App with Next.js & Supabase
 
-<div align="center">
-  <br />
-  <a href="https://youtu.be/ugxI1o5SyMs" target="_blank">
-   <img width="1280" height="720" alt="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of 10,000 REACT COMPONENTS" src="https://github.com/user-attachments/assets/819fc9b5-713e-4fbe-b659-dc1067d4bd82" />
-
-  </a>
-  <br />
-  <div>
-    <img src="https://img.shields.io/badge/-Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
-    <img src="https://img.shields.io/badge/-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-    <img src="https://img.shields.io/badge/-Clerk-0072CE?style=for-the-badge&logo=clerk&logoColor=white" alt="Clerk" />
-    <img src="https://img.shields.io/badge/-@dnd--kit-FAB005?style=for-the-badge&logo=react&logoColor=white" alt="dnd-kit" />
-    <img src="https://img.shields.io/badge/-TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS" />
-  </div>
-  <h3 align="center">Build a Trello‑Style App with Next.js, Supabase, Clerk & dnd‑kit</h3>
-  <div align="center">
-    Follow the full video tutorial on  
-    <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank"><b>YouTube</b></a>
-  </div>
-  <br />
-</div>
-
-## 📋 Table of Contents
-
-1. [Introduction](#-introduction)
-2. [Tech Stack](#-tech-stack)
-3. [Features](#-features)
-4. [Quick Start](#-quick-start)
-5. [Screenshots](#-screenshots)
-6. [Deployment](#-deployment)
-
 ---
 
 ---
@@ -45,6 +14,8 @@
 * **@dnd-kit** – Flexible drag‑and‑drop primitives
 * **TailwindCSS** – Utility‑first styling
 * **TypeScript** – Static typing and developer tooling
+* **React Context API** – State management has been handled using React Context API
+
 
 ---
 

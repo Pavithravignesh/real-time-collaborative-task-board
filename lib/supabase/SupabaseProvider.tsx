@@ -24,16 +24,9 @@ export default function SupabaseProvider({
 
   useEffect(() => {
     if (!session) return;
-    
+
     const setupSupabase = async () => {
       try {
-        // Get user info from Clerk
-        const userId = session.user.id;
-        const email = session.user.primaryEmailAddress?.emailAddress;
-        
-        console.log('Clerk User ID:', userId);
-        console.log('Clerk Email:', email);
-        
         const client = createClient(
           process.env.NEXT_PUBLIC_SUPABASE_URL!,
           process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -49,7 +42,7 @@ export default function SupabaseProvider({
         setSupabase(client);
         setIsLoaded(true);
       } catch (error) {
-        console.error('Error setting up Supabase client:', error);
+        console.error("error setting up Supabase client:", error);
       }
     };
 
@@ -67,7 +60,7 @@ export default function SupabaseProvider({
 export const useSupabase = () => {
   const context = useContext(Context);
   if (context === undefined) {
-    throw new Error("useSupabase needs to be inside the provider");
+    throw new Error("useSupabase needs to be inside provider");
   }
 
   return context;
