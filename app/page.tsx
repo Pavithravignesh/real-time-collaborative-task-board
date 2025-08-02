@@ -1,12 +1,8 @@
 "use client";
 
-import { SignUpButton, useUser } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/navbar";
 
 export default function HomePage() {
-  const { isSignedIn } = useUser();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
