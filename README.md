@@ -275,7 +275,7 @@ FOR DELETE USING (
 ### Clone and Run
 
 ```bash
-git clone https://github.com/yourusername/trello-clone-next-supabase.git
+git clone https://github.com/yourusername/real-time-collaborative-task-board.git
 cd real-time-collaborative-task-board
 npm install
 ```
