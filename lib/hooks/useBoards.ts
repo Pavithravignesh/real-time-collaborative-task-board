@@ -8,7 +8,7 @@ import {
   taskService,
 } from "../services";
 import { useEffect, useState } from "react";
-import { Board, Column, ColumnWithTasks, Task } from "../supabase/models";
+import { Board, ColumnWithTasks, Task } from "../supabase/models";
 import { useSupabase } from "../supabase/SupabaseProvider";
 
 export function useBoards() {
@@ -190,7 +190,7 @@ export function useBoard(boardId: string) {
     if (loading) {
       throw new Error("Board is still loading");
     }
-    
+
     if (!board || !user) {
       console.error("Board or user not loaded", { board, user, loading });
       throw new Error("Board not loaded");

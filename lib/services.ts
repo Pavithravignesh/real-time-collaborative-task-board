@@ -168,7 +168,7 @@ export const boardDataService = {
       columnService.getColumns(supabase, boardId),
     ]);
 
-    if (!board) throw new Error("Board not found");
+    if (!board) throw new Error("Board not been found");
 
     const tasks = await taskService.getTasksByBoard(supabase, boardId);
 
