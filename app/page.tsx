@@ -140,10 +140,12 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <Trello className="h-6 w-6 text-blue-400" />
-              <span className="text-xl font-bold">TrelloClone</span>
+              <span className="text-xl font-bold">
+                Creative Frenzy Task Management
+              </span>
             </div>
             <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <span>© 2024 TrelloClone. All rights reserved.</span>
+              <span>demo project.</span>
               <span>Built with Next.js & Clerk</span>
             </div>
           </div>
