@@ -35,12 +35,6 @@
 
 ---
 
-## 🚀 Introduction
-
-In this tutorial, you’ll learn how to build a production‑ready **Trello‑Style App** using **Next.js**, **Supabase**, **Clerk**, **dnd‑kit**, and **TailwindCSS**. You’ll implement **real‑time data**, **authentication & billing**, **drag‑and‑drop**, and **filtering**, all deployed to Vercel.
-
-🎥 Watch the full tutorial: [YouTube](https://youtu.be/ugxI1o5SyMs)
-
 ---
 
 ## ⚙️ Tech Stack
@@ -314,7 +308,7 @@ FOR DELETE USING (
 
 ```bash
 git clone https://github.com/yourusername/trello-clone-next-supabase.git
-cd trello-clone-next-supabase
+cd real-time-collaborative-task-board
 npm install
 ```
 
