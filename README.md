@@ -45,7 +45,7 @@
 
 ### Prerequisites
 
-* [Node.js](https://nodejs.org/) (v16+)
+* [Node.js](https://nodejs.org/) (v18.18+; v20 LTS recommended)
 * [Supabase CLI](https://supabase.com/docs/guides/cli)
 * Supabase project (URL & ANON key)
 * Clerk account (Publishable & Secret keys)
@@ -270,12 +270,30 @@ FOR DELETE USING (
       AND boards.user_id = requesting_user_id()
   )
 );
+
+-- =========================================================
+-- 4. Real-time: broadcast changes to subscribed clients
+-- =========================================================
+ALTER PUBLICATION supabase_realtime ADD TABLE public.tasks, public.columns;
 ```
+
+### Connect Clerk to Supabase
+
+Supabase must trust Clerk's session tokens, otherwise every query is rejected by RLS.
+
+1. In the Clerk dashboard, open **Integrations → Supabase** and activate it. Copy the **Clerk domain** it shows.
+2. In the Supabase dashboard, open **Authentication → Sign In / Providers → Third-Party Auth**, add **Clerk**, and paste that domain.
+
+The app sends the Clerk session token with every Supabase request (`lib/supabase/SupabaseProvider.tsx`), and `requesting_user_id()` reads its `sub` claim.
+
+### Plans (optional)
+
+The free plan is limited to one board. To offer upgrades, enable **Clerk Billing** and create plans with the keys `pro_user` and `enterprise_user`; they are listed on `/pricing`.
 
 ### Clone and Run
 
 ```bash
-git clone https://github.com/yourusername/real-time-collaborative-task-board.git
+git clone https://github.com/Pavithravignesh/real-time-collaborative-task-board.git
 cd real-time-collaborative-task-board
 npm install
 ```
@@ -293,6 +311,12 @@ npm install
    npm run dev
    ```
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Deploy to Vercel
+
+1. Import the repository in [Vercel](https://vercel.com/new) (framework preset: Next.js).
+2. Add the four environment variables from `.env.example` under **Settings → Environment Variables**. Use Clerk **production** keys for the production environment.
+3. Deploy, then add the deployment URL to your Clerk instance's allowed domains.
 
 ---
 

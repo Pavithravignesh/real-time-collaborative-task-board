@@ -14,8 +14,6 @@ import {
   FilterDialog,
 } from "@/components/board";
 
-
-
 export default function BoardPage() {
   const { id } = useParams<{ id: string }>();
   const {
@@ -24,7 +22,6 @@ export default function BoardPage() {
     updateBoard,
     columns,
     createRealTask,
-    setColumns,
     moveTask,
     updateColumn,
     loading,
@@ -76,37 +73,12 @@ export default function BoardPage() {
     await createRealTask(targetColumn.id, taskData);
   }
 
-  async function handleCreateTask(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const taskData = {
-      title: formData.get("title") as string,
-      description: (formData.get("description") as string) || undefined,
-      assignee: (formData.get("assignee") as string) || undefined,
-      dueDate: (formData.get("dueDate") as string) || undefined,
-      priority:
-        (formData.get("priority") as "low" | "medium" | "high") || "medium",
-    };
-
-    if (taskData.title.trim()) {
-      await createTask(taskData);
-
-      const trigger = document.querySelector(
-        '[data-state="open"'
-      ) as HTMLElement;
-      if (trigger) trigger.click();
-    }
-  }
-
   async function handleCreateColumn(e: React.FormEvent) {
     e.preventDefault();
 
     if (!newColumnTitle.trim()) return;
 
-    if (loading) {
-      console.log("Board is still loading, please wait...");
-      return;
-    }
+    if (loading) return;
 
     try {
       await createColumn(newColumnTitle.trim());
@@ -146,14 +118,9 @@ export default function BoardPage() {
         return false;
       }
 
-      // Filter by due date
-      if (filters.dueDate && task.due_date) {
-        const taskDate = new Date(task.due_date).toDateString();
-        const filterDate = new Date(filters.dueDate).toDateString();
-
-        if (taskDate !== filterDate) {
-          return false;
-        }
+      // Filter by due date (both are YYYY-MM-DD strings)
+      if (filters.dueDate && task.due_date !== filters.dueDate) {
+        return false;
       }
 
       return true;
@@ -194,14 +161,17 @@ export default function BoardPage() {
         {/* Board Content */}
         {!loading && !error && (
           <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
-            <BoardStats columns={columns} onCreateTask={handleCreateTask} />
+            <BoardStats
+              columns={columns}
+              onCreateTask={createTask}
+              disabled={columns.length === 0}
+            />
 
             <BoardContent
               columns={filteredColumns}
-              onCreateTask={createTask}
               onEditColumn={handleEditColumn}
               onMoveTask={moveTask}
-              onSetColumns={setColumns}
+              onAddColumn={() => setIsCreatingColumn(true)}
               loading={loading}
             />
           </main>
@@ -231,6 +201,7 @@ export default function BoardPage() {
           if (!open) {
             setIsCreatingColumn(false);
             setIsEditingColumn(false);
+            setEditingColumn(null);
           }
         }}
         title={isCreatingColumn ? newColumnTitle : editingColumnTitle}
@@ -244,11 +215,11 @@ export default function BoardPage() {
         onSubmit={isCreatingColumn ? handleCreateColumn : handleUpdateColumn}
         onCancel={() => {
           setIsCreatingColumn(false);
-                  setIsEditingColumn(false);
+          setIsEditingColumn(false);
           setNewColumnTitle("");
-                  setEditingColumnTitle("");
-                  setEditingColumn(null);
-                }}
+          setEditingColumnTitle("");
+          setEditingColumn(null);
+        }}
         loading={loading}
       />
     </>

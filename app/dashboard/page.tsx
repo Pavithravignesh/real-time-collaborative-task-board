@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/navbar";
 import { useBoards } from "@/lib/hooks/useBoards";
+import { usePlan } from "@/lib/contexts/PlanContext";
 import { Board } from "@/lib/supabase/models";
 import { BoardFilterData } from "@/lib/types";
 import { useState } from "react";
@@ -13,8 +14,11 @@ import {
   UpgradeDialog,
 } from "@/components/dashboard";
 
+const FREE_PLAN_BOARD_LIMIT = 1;
+
 export default function DashboardPage() {
-  const { createBoard, boards, error } = useBoards();
+  const { createBoard, boards, loading, error } = useBoards();
+  const { isFreeUser } = usePlan();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [showUpgradeDialog, setShowUpgradeDialog] = useState<boolean>(false);
@@ -65,14 +69,25 @@ export default function DashboardPage() {
   }
 
   const handleCreateBoard = async () => {
+    if (isFreeUser && boards.length >= FREE_PLAN_BOARD_LIMIT) {
+      setShowUpgradeDialog(true);
+      return;
+    }
     await createBoard({ title: "New Board" });
   };
 
   if (error) {
     return (
-      <div>
-        <h2> Error loading boards</h2>
-        <p>{error}</p>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="flex items-center justify-center p-8">
+          <div className="text-center">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Error loading boards
+            </h2>
+            <p className="text-red-600">{error}</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -87,6 +102,7 @@ export default function DashboardPage() {
         
         <BoardsSection
           boards={filteredBoards}
+          loading={loading}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
           searchValue={filters.search}
