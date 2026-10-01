@@ -1,0 +1,10 @@
+export { default as DashboardHeader } from './DashboardHeader';
+export { default as DashboardStats } from './DashboardStats';
+export { default as BoardsSection } from './BoardsSection';
+export { default as BoardCard } from './BoardCard';
+export { default as BoardGrid } from './BoardGrid';
+export { default as BoardList } from './BoardList';
+export { default as ViewToggle } from './ViewToggle';
+export { default as SearchBar } from './SearchBar';
+export { default as FilterDialog } from './FilterDialog';
+export { default as UpgradeDialog } from './UpgradeDialog'; 
