@@ -10,6 +10,7 @@ import ViewToggle from "./ViewToggle";
 
 interface BoardsSectionProps {
   boards: Board[];
+  loading?: boolean;
   viewMode: "grid" | "list";
   onViewModeChange: (mode: "grid" | "list") => void;
   searchValue: string;
@@ -20,6 +21,7 @@ interface BoardsSectionProps {
 
 export default function BoardsSection({
   boards,
+  loading = false,
   viewMode,
   onViewModeChange,
   searchValue,
@@ -58,8 +60,10 @@ export default function BoardsSection({
 
       <SearchBar value={searchValue} onChange={onSearchChange} />
 
-      {boards.length === 0 ? (
-        <div>No boards yet</div>
+      {loading ? (
+        <div className="py-8 text-center text-gray-600">Loading boards...</div>
+      ) : boards.length === 0 ? (
+        <div className="py-8 text-center text-gray-600">No boards yet</div>
       ) : viewMode === "grid" ? (
         <BoardGrid boards={boards} />
       ) : (

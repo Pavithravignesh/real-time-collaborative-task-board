@@ -1,14 +1,20 @@
 "use client";
 
 import { ColumnWithTasks } from "@/lib/supabase/models";
+import { TaskData } from "@/lib/types";
 import TaskDialog from "./TaskDialog";
 
 interface BoardStatsProps {
   columns: ColumnWithTasks[];
-  onCreateTask: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onCreateTask: (taskData: TaskData) => Promise<void>;
+  disabled?: boolean;
 }
 
-export default function BoardStats({ columns, onCreateTask }: BoardStatsProps) {
+export default function BoardStats({
+  columns,
+  onCreateTask,
+  disabled = false,
+}: BoardStatsProps) {
   const totalTasks = columns.reduce((sum, col) => sum + col.tasks.length, 0);
 
   return (
@@ -20,7 +26,7 @@ export default function BoardStats({ columns, onCreateTask }: BoardStatsProps) {
         </div>
       </div>
 
-      <TaskDialog onSubmit={onCreateTask} />
+      <TaskDialog onSubmit={onCreateTask} disabled={disabled} />
     </div>
   );
 } 

@@ -34,30 +34,28 @@ export default function BoardHeader({
   const [newTitle, setNewTitle] = useState("");
   const [newColor, setNewColor] = useState("");
 
+  const dialogOpen = isOpen !== undefined ? isOpen : isEditingTitle;
+  const handleOpenChange = onOpenChange || setIsEditingTitle;
+
   async function handleUpdateBoard(e: React.FormEvent) {
     e.preventDefault();
 
     if (!newTitle.trim() || !board) return;
 
-    try {
-      await onUpdateBoard(board.id, {
-        title: newTitle.trim(),
-        color: newColor || board.color,
-      });
-      setIsEditingTitle(false);
-    } catch { }
+    const updated = await onUpdateBoard(board.id, {
+      title: newTitle.trim(),
+      color: newColor || board.color,
+    });
+    if (updated) handleOpenChange(false);
   }
 
   // Initialize form when dialog opens
   useEffect(() => {
-    if (isEditingTitle && board) {
+    if (dialogOpen && board) {
       setNewTitle(board.title);
       setNewColor(board.color);
     }
-  }, [isEditingTitle, board]);
-
-  const dialogOpen = isOpen !== undefined ? isOpen : isEditingTitle;
-  const handleOpenChange = onOpenChange || setIsEditingTitle;
+  }, [dialogOpen, board]);
 
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
@@ -111,7 +109,7 @@ export default function BoardHeader({
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsEditingTitle(false)}
+              onClick={() => handleOpenChange(false)}
             >
               Cancel
             </Button>
